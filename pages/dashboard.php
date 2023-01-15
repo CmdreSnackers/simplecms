@@ -1,4 +1,19 @@
 <?php
+//if not not logged in redirect back to login
+if(!Authentication::isLoggedIn()) {
+  header('Location: /login');
+  exit;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -26,6 +41,9 @@ require dirname(__DIR__) . '/parts/header.php';
             </div>
           </div>
         </div>
+
+        <!-- manage manage-users -->
+        <?php if(Authentication::whoCanAccess('admin')): ?>
         <div class="col">
           <div class="card mb-2">
             <div class="card-body">
@@ -42,8 +60,10 @@ require dirname(__DIR__) . '/parts/header.php';
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </div> <!-- end manage-users -->
+        <?php endif;?>
+
+      </div> <!-- row -->
       <div class="mt-4 text-center">
         <a href="/" class="btn btn-link btn-sm"
           ><i class="bi bi-arrow-left"></i> Back</a

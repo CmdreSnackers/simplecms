@@ -27,14 +27,20 @@ class DB
     /**
      * Trigger SELECT command via PDO
      */
-    public function select($sql, $data = [])
+    public function select($sql, $data = [], $is_list = false)
     {
         //prepare
         $statement = $this->db->prepare($sql);
         //execute
         $statement->execute($data);
+        // if is_list is true then return only one record
+        // if true return all records
+        if($is_list) {
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } else {
         //fetch
-        return $statement->fetch(PDO::FETCH_ASSOC);
+            return $statement->fetch(PDO::FETCH_ASSOC);
+        }
     }
 
     /**
@@ -42,7 +48,7 @@ class DB
      * $sql = insert command
      * $data will be used in execute()
      */
-    public function insert( $sql, $data )
+    public function insert( $sql, $data = [] )
     {
         $statement = $this->db->prepare( $sql );
         $statement->execute( $data );
@@ -52,16 +58,20 @@ class DB
     /**
      * Trigger UPDATE command via PDO
      */
-    public function update()
+    public function update($sql, $data = [])
     {
-
+        $statement = $this->db->prepare( $sql );
+        $statement->execute( $data );
+        return $statement->rowCount();
     }
 
     /**
      * Trigger DELETE command via PDO
      */
-    public function delete()
+    public function delete($sql, $data = [])
     {
-
+        $statement = $this->db->prepare( $sql );
+        $statement->execute( $data );
+        return $statement->rowCount();
     }
 }

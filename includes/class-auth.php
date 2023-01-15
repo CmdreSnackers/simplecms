@@ -10,7 +10,25 @@ class Authentication
      */
     public static function login( $email, $password )
     {
+        $user_id = false;
 
+        $user = DB::connect()->select(
+            'SELECT * FROM users where email = :email',
+            [
+                'email' => $email
+            ]
+        );
+
+        // if $user is valid, then return $user array
+        if ( $user ) {
+            // proceed to verify password
+            if ( password_verify( $password, $user['password'] ) ) {
+                $user_id = $user['id'];
+            }
+        }
+
+        // make sure to return the user's ID
+        return $user_id;
     }
 
     /**
@@ -66,8 +84,56 @@ class Authentication
         $_SESSION['user'] = [
             'id' => $user['id'],
             'name' => $user['name'],
-            'email' => $user['email']
+            'email' => $user['email'],
+            'role' => $user['role']
         ];
     }
 
+    //retrieve user role 
+    public static function getRole()
+    {
+        if(self::isLoggedIn()) {
+            return $_SESSION['user']['role'];
+        }
+        return false;
+    }
+
+    //check if current user is admin
+    public static function isAdmin()
+    {
+        return self::getRole() == 'admin';
+    }
+
+    //check if currect user is editor
+    public static function isEditor()
+    {
+        return self::getRole() == 'editor';
+    }
+
+    //check if user is user
+    public static function isUser()
+    {
+        return self::getRole() == 'user';
+    }
+
+    //control user access
+    //$role can be admin user editor
+    public static function whoCanAccess($role)
+    {
+        //make sure user is logged
+        if(self::isLoggedIn()) {
+            //if role is admin
+            switch($role) {
+                //if role is admin
+                case 'admin':
+                    return self::isAdmin();
+                case 'editor':
+                    return self::isEditor() || self::isAdmin();
+                case 'user':
+                    return self::isUser() || self::isEditor() || self::isAdmin();
+            }
+        }
+        //if no condition
+        return false;
+    }
 }

@@ -1,5 +1,24 @@
 <?php
+if(!Authentication::isLoggedIn()) {
+  header('Location: /login');
+  exit;
+}
 
+CSRF::generateToken('add_post_form');
+
+if($_SERVER['REQUEST_METHOD'] ==='POST')
+{
+  $rules = [
+    'title' => 'required'
+  ]  
+
+
+
+
+
+
+
+}
 
 
 require dirname(__DIR__) . '/parts/header.php';

@@ -1,17 +1,15 @@
 <?php
 
     // set CSRF token
-
-
+CSRF::generateToken('signup_form');
 
     // make sure user not already logged-in
-    //if user is already logged redirect to dash
-if(Authentication::isLoggedIn())
-{
-    header('Location: /dashboard');
-    exit;
-}
-
+    // if user is already logged in, redirect the user to dashboard
+    if ( Authentication::isLoggedIn() )
+    {
+      header('Location: /dashboard');
+      exit;
+    }
 
     // make sure it's POST request
     if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
@@ -22,46 +20,56 @@ if(Authentication::isLoggedIn())
       $confirm_password = $_POST['confirm_password'];
 
       // step #1: do error check
-
-
-      // step #2: make sure email is unique (not in the database)
-      
-
-      // step #3: insert user into database
-      $user_id = Authentication::signup(
-        $name,
-        $email,
-        $password
+      $error = FormValidation::validate(
+        $_POST,
+        [
+          'name' => 'required',
+          'email' => 'email_check',
+          'password' => 'password_check',
+          'confirm_password' => 'is_password_match',
+          'csrf_token' => 'signup_form_csrf_token'
+        ]
       );
-
-      // step #4: assign the user data to $_SESSION['user'] data
-      Authentication::setSession($user_id);
-
-      // method #1;
-      // $database = new DB();
-      // $database->insert();
-
-      // method #2:
-      // DB::connect()->insert();
+        
+      // step #2: make sure email is unique (not in the database)
+      if ( FormValidation::checkEmailUniqueness( $email ) ) {
+        $error = FormValidation::checkEmailUniqueness( $email );
+      }
 
 
-      // step #5: redirect the user to dashboard
-        // 5.1: remove csrf token
+      // make sure $error is false
+      if ( !$error ) {
+
+        // step #3: insert user into database
+        $user_id = Authentication::signup(
+          $name,
+          $email,
+          $password
+        );
+
+        // step #4: assign the user data to $_SESSION['user'] data
+        Authentication::setSession( $user_id );
+
+        // step #5: redirect the user to dashboard
+          // 5.1: remove csrf token
+          CSRF::removeToken('signup_form');
 
 
+          // 5.2: redirect user to dashboard
+          header('Location: /dashboard');
+          exit;
 
+      } // end - !$error
 
-      // 5.2 redirect user to dashboard
-      header('Location: /dashboard');
-      exit;
-}
+    }
 
-require dirname(__DIR__) . '/parts/header.php';
+    require dirname(__DIR__) . '/parts/header.php';
 ?>
 <div class="container my-5 mx-auto" style="max-width: 500px;">
       <h1 class="h1 mb-4 text-center">Sign Up a New Account</h1>
 
       <div class="card p-4">
+        <?php require dirname( __DIR__ ) . '/parts/error_box.php'; ?>
         <form 
           method="POST" 
           action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
@@ -99,7 +107,7 @@ require dirname(__DIR__) . '/parts/header.php';
             </button>
           </div>
           <!-- insert csrf token input here -->
-
+          <input type="hidden" name="csrf_token" value="<?php echo CSRF::getToken('signup_form'); ?>">
         </form>
       </div>
 
@@ -117,5 +125,5 @@ require dirname(__DIR__) . '/parts/header.php';
       </div>
     </div>
 <?php
-require dirname(__DIR__) . '/parts/footer.php';
-?>
+
+    require dirname(__DIR__) . '/parts/footer.php';

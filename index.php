@@ -5,6 +5,8 @@ session_start();
 require 'includes/class-db.php';
 require 'includes/class-user.php';
 require 'includes/class-auth.php';
+require 'includes/class-form-vali.php';
+require 'includes/class-csrf.php';
 
 $paths = trim( $_SERVER["REQUEST_URI"], '/' );
 
