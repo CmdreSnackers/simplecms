@@ -1,9 +1,6 @@
 <?php
-session_start();
 
-require 'includes/functions.php';
-
-require 'parts/header.php';
+require dirname(__DIR__) . '/parts/header.php';
 ?>
 
 
@@ -52,5 +49,5 @@ require 'parts/header.php';
 
 
 <?php
-require 'parts/footer.php';
+require dirname(__DIR__) . '/parts/footer.php';
 ?>

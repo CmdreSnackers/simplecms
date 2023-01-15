@@ -1,8 +1,8 @@
 <?php
-session_start();
-require 'includes/functions.php';
 
-require 'parts/header.php';
+
+
+require dirname(__DIR__) . '/parts/header.php';
 ?>
     <div class="container mx-auto my-5" style="max-width: 500px;">
       <h1 class="h1 mb-4 text-center">Post 1</h1>
@@ -43,5 +43,5 @@ require 'parts/header.php';
 
 
 <?php
-require 'parts/footer.php';
+require dirname(__DIR__) . '/parts/footer.php';
 ?>

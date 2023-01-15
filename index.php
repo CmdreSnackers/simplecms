@@ -1,7 +1,14 @@
 <?php
-$paths = $_SERVER["REQUEST_URI"];
-$paths = trim($paths, '/');
-$paths = parse_url($paths, PHP_URL_PATH);
+session_start();
+
+//require all the classes and function files
+require 'includes/class-db.php';
+require 'includes/class-user.php';
+require 'includes/class-auth.php';
+
+$paths = trim( $_SERVER["REQUEST_URI"], '/' );
+
+$paths = parse_url( $paths, PHP_URL_PATH );
 
 switch ($paths) {
   case 'login':
@@ -41,3 +48,6 @@ switch ($paths) {
     require "pages/home.php";
     break;
 }
+
+?>
+

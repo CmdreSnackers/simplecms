@@ -1,15 +1,11 @@
 <?php
-session_start();
 
-require 'includes/functions.php';
-
-if(isLogged()) {
-    
-    logout();
-    
-    header('Location: /login');
-    exit;
-} else {
-    header('Location: /login');
-    exit;
+// make sure user is logged in
+if(Authentication::isLoggedIn()) {
+    // only if user is logged in, then log out 
+    Authentication::logout();
 }
+
+header('Location: /login');
+exit;
+

@@ -1,8 +1,6 @@
 <?php
-session_start();
-require 'includes/functions.php';
+require dirname(__DIR__) . '/parts/header.php';
 
-require 'parts/header.php';
 ?>
     <div class="container mx-auto my-5" style="max-width: 700px;">
       <div class="d-flex justify-content-between align-items-center mb-2">
@@ -50,5 +48,5 @@ Curabitur sit amet nisl feugiat, efficitur nibh et, efficitur ex. Morbi nec frin
     </div>
 
 <?php
-require 'parts/footer.php';
+require dirname(__DIR__) . '/parts/footer.php';
 ?>

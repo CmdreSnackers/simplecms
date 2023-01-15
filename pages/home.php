@@ -1,7 +1,7 @@
 <?php
-session_start();
 
-require 'parts/header.php';
+
+require dirname(__DIR__) . '/parts/header.php';
 ?>
 
     <div class="container mx-auto my-5" style="max-width: 500px;">
@@ -44,11 +44,15 @@ require 'parts/header.php';
       </div>
 
       <div class="mt-4 d-flex justify-content-center gap-3">
-        <a href="login" class="btn btn-link btn-sm">Login</a>
-        <a href="signup" class="btn btn-link btn-sm">Sign Up</a>
+      <?php if(Authentication::isLoggedIn()): ?>
+        <a href="/logout" class="btn btn-link btn-sm">Logout</a>
+      <?php else: ?>
+        <a href="/login" class="btn btn-link btn-sm">Login</a>
+        <a href="/signup" class="btn btn-link btn-sm">Sign Up</a>
+      <?php endif ;?>
       </div>
     </div>
 
 <?php
-require 'parts/footer.php';
+require dirname(__DIR__) . '/parts/footer.php';
 ?>

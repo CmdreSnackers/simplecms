@@ -1,8 +1,18 @@
 <?php
-session_start();
-require 'includes/functions.php';
+if(!Authentication::isLoggedIn()) {
+  header('Location: /login');
+  exit;
+}
 
-require 'parts/header.php';
+CSRF::generateToken('delete_post_form');
+
+if($_SERVER['REQUEST_METHOD'] ==='POST')
+{
+  
+}
+
+
+require dirname(__DIR__) . '/parts/header.php';
 ?>
     <div class="container mx-auto my-5" style="max-width: 700px;">
       <div class="d-flex justify-content-between align-items-center mb-2">
@@ -24,10 +34,11 @@ require 'parts/header.php';
             </tr>
           </thead>
           <tbody>
+            <?php foreach() :?>
             <tr>
               <th scope="row">5</th>
-              <td>Post 5</td>
-              <td><span class="badge bg-warning">Pending Review</span></td>
+              <td>Post <?php echo ?></td>
+              <td><span class="badge bg-warning"><?php echo  ?></span></td>
               <td class="text-end">
                 <div class="buttons">
                   <a
@@ -59,5 +70,5 @@ require 'parts/header.php';
 
 
 <?php
-require 'parts/footer.php';
+require dirname(__DIR__) . '/parts/footer.php';
 ?>

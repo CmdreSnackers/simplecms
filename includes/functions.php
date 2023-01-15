@@ -9,7 +9,7 @@ function connecttodb()
 );
 }
 
-function islogged()
+function isLogged()
 {
     // if user logged in, return true
     // if user not logged in, return false
