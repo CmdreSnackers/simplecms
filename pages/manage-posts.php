@@ -58,6 +58,7 @@ require dirname(__DIR__) . '/parts/header.php';
                 </div>
               </td>
             </tr>
+            <?php endforeach; ?>
           </tbody>
         </table>
       </div>

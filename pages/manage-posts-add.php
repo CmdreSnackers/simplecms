@@ -10,7 +10,7 @@ if($_SERVER['REQUEST_METHOD'] ==='POST')
 {
   $rules = [
     'title' => 'required'
-  ]  
+  ];
 
 
 

@@ -4,7 +4,7 @@ if(!Authentication::isLoggedIn()) {
   exit;
 }
 
-User::getUserById('user_id')
+User::getUserById('user_id');
 
 CSRF::generateToken('edit_post_form');
 
