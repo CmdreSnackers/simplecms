@@ -1,5 +1,5 @@
 <?php
-if(!Authentication::isLoggedIn()) {
+if(!Authentication::whoCanAccess('user')) {
   header('Location: /login');
   exit;
 }

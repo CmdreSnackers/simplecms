@@ -7,6 +7,7 @@ require 'includes/class-user.php';
 require 'includes/class-auth.php';
 require 'includes/class-form-vali.php';
 require 'includes/class-csrf.php';
+require 'includes/class-posts.php';
 
 $paths = trim( $_SERVER["REQUEST_URI"], '/' );
 
