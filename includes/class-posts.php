@@ -9,9 +9,9 @@ class Posts{
     {
         if(Authentication::isUser()) {
             return DB::connect()->select(
-                'SELECT * FROM posts WHERE id = :id ORDER BY id DESC',
+                'SELECT * FROM posts WHERE user_id = :id ORDER BY id DESC',
                 [
-                    'id' => $user_id
+                    'user_id' => $user_id
                 ],
                 true
             );
@@ -29,8 +29,20 @@ class Posts{
         return DB::connect()->select(
             'SELECT * FROM posts WHERE id = :id',
             [
-                'post_id' => $post_id
+                'id' => $post_id
             ]
+        );
+    }
+
+    // get all published posts
+    public static function getPublishPosts()
+    {
+        return DB::connect()->select(
+            'SELECT * FROM posts WHERE status = :status ORDER BY id DESC',
+            [
+                'status' => 'publish'
+            ],
+            true
         );
     }
 
@@ -52,7 +64,7 @@ class Posts{
         return DB::connect()->delete(
             'DELETE FROM posts where id = :id',
             [
-                'post_id' => $post_id
+                'id' => $post_id
             ]
         );
     }
@@ -71,18 +83,4 @@ class Posts{
             ]
         );
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
