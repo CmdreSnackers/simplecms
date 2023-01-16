@@ -34,10 +34,10 @@ require dirname(__DIR__) . '/parts/header.php';
             </tr>
           </thead>
           <tbody>
-            <?php foreach() :?>
+            <?php foreach($posts as$post) :?>
             <tr>
               <th scope="row">5</th>
-              <td>Post <?php echo ?></td>
+              <td>Post <?php echo ; ?></td>
               <td><span class="badge bg-warning"><?php echo  ?></span></td>
               <td class="text-end">
                 <div class="buttons">
